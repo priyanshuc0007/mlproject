@@ -4,8 +4,8 @@ import sys
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-from exceptions import customexception  # Update with the correct import path
-from logger import logging  # Update with the correct import path
+from srs.exceptions import customexception # Update with the correct import path
+from srs.logger import logging  # Update with the correct import path
 
 @dataclass
 class DataIngestionConfig:
