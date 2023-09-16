@@ -4,8 +4,11 @@ import sys
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-from srs.exceptions import customexception # Update with the correct import path
-from srs.logger import logging  # Update with the correct import path
+from srs.exceptions import customexception 
+from srs.logger import logging  
+from srs.components.data_transformation import datatransformation
+from srs.components.data_transformation import datatransformationconfig
+
 
 @dataclass
 class DataIngestionConfig:
@@ -21,7 +24,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Data processing initiated")
         try:
-            df = pd.read_csv("notebook\data\stud.csv")  # Update with the correct data path
+            df = pd.read_csv("notebook\data\stud.csv")  
             logging.info("Read the DataFrame")
 
             os.makedirs(os.path.dirname(self.data_ingestion_config.train_data_path), exist_ok=True)
@@ -44,5 +47,7 @@ class DataIngestion:
 
 if __name__ == "__main__":
     obj = DataIngestion()
-    data_paths = obj.initiate_data_ingestion()
-    print(data_paths)  # Print the paths of the ingested data files
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = datatransformation()
+    data_transformation.initiate_data_transformation(train_data, test_data)
