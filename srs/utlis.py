@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.metrics import r2_score
 from srs.exceptions import customexception  # Ensure this import is correct
 from sklearn.model_selection import GridSearchCV
+import pickle
 
 def save_object(file_path, obj):
     
@@ -46,6 +47,13 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
             report[list(models.keys())[i]] = test_model_score
 
         return report
+
+    except Exception as e:
+        raise customexception(e, sys)
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
 
     except Exception as e:
         raise customexception(e, sys)
