@@ -9,7 +9,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
-from srs.utlis import save_object,evaluate_models
+from srs.utlis import save_object
 
 @dataclass
 class datatransformationconfig:
@@ -55,16 +55,13 @@ class datatransformation:
             test_df = pd.read_csv(test_path)
             logging.info("data is read") 
             logging.info("obtaining preprocessing object")
-
             preprocessing_obj = self.get_data_transformer_object()
             target_column_name = "math_score"
             numerical_column = ['reading_score', 'writing_score']
-            
             input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
             input_feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
             target_feature_test_df = test_df[target_column_name]
-            
             logging.info("applying preprocessing object on test and train dataframe")
             input_feature_train_df_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_df_arr = preprocessing_obj.transform(input_feature_test_df)
